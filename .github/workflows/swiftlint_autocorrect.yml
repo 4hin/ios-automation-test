@@ -16,11 +16,11 @@ jobs:
       run: swiftlint autocorrect --format
     - name: Setup git
       env:
-        ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+        ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        git config --local user.name 4hin
-        git config --local user.email xxxxxxxx@xxxxxx
-        git remote set-url origin https://4hin:${ACCESS_TOKEN}@github.com/4hin/ios-automation-test.git
+        git config --local user.name "4hin"
+        git config --local user.email "xxxxxxxx@xxxxxx"
+        git remote set-url origin https://4hin:${GITHUB_TOKEN}@github.com/4hin/ios-automation-test.git
     - name: Git commit
       run: |
         git checkout -b hoge
