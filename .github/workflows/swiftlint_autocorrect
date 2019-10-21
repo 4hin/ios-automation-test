@@ -1,0 +1,39 @@
+  
+name: SwiftLint Autocorrect
+
+on: [pull_request]
+
+jobs:
+  build:
+
+    runs-on: macOS-latest
+    
+    steps:
+    - uses: actions/checkout@v1
+    - name: install danger
+      run: bundle install
+    - name: install swiftlint
+      run: brew install swiftlint
+    - name: swiftlint
+      run: swiftlint autocorrect --format
+    - name Setup git
+      env:
+        ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+      run: |
+        git config --local user.name 4hin
+        git remote set-url origin https://4hin:${ACCESS_TOKEN}@github.com/4hin/ios-automation-test.git
+        
+    - name Git commit
+      run: |
+        git branch -b hoge
+        git add -A
+        
+        DIFF=`git diff --cached --numstat | wc -l`
+          if [ $DIFF -eq 0 ]; then
+          # ファイルの変更がなければjobを正常終了する
+            exit 0
+          fi
+        git commit -am 'swiftlint autocorrect'
+        
+    - name: Git push
+      run: git push origin hoge
