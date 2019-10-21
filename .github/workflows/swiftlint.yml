@@ -10,9 +10,7 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: install danger
-      run: |
-        gem install bundler
-        bundle install
+      run: bundle install
     - name: install swiftlint
       run: brew install swiftlint
     - name: run danger
