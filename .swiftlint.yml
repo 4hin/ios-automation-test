@@ -1,0 +1,61 @@
+
+# 無効にするルール
+disabled_rules:
+- trailing_whitespace # 余分に改行がある方が視認性が上がる為、無効
+- type_name # クラス名は長くして情報を詰めておく必要もある為、無効
+
+# 一行の文字列制限を100文字から300文字に変更
+line_length:
+  error: 400
+  ignores_comments: true
+
+cyclomatic_complexity:
+  warning: 30
+  error: 55
+  ignores_case_statements: true
+
+# 変数名が１文字以上なら許可に変更
+identifier_name:
+  allowed_symbols: "_"
+  min_length: 1
+  max_length: 80
+  validates_start_with_lowercase: false
+
+force_cast: warning
+
+force_try: warning
+
+file_length:
+  warning: 1500
+  error: 3000
+
+function_body_length:
+  warning: 100
+  error: 500
+
+shorthand_operator: warning
+
+type_body_length:
+ warning: 400
+ error: 2500
+
+# デフォルト無効のルールのうち、有効にするもの。
+opt_in_rules:
+- attributes
+- closure_end_indentation
+- closure_spacing
+- conditional_returns_on_newline
+- empty_count
+- explicit_init
+- first_where
+- force_unwrapping
+- missing_docs
+- operator_usage_whitespace
+- overridden_super_call
+- redundant_nil_coalescing
+- switch_case_on_newline
+
+# 追加したOSSライブラリは対象に含めたくない
+excluded:
+- Pods/
+- Carthage/
