@@ -22,7 +22,7 @@ jobs:
       run: |
         git config --local user.name 4hin
         git congig --local user.email xxxxxxxx@xxxxxx
-        git remote set-url origin git@github.com:4hin/ios-automation-test.git
+        git remote set-url origin https://4hin:${ACCESS_TOKEN}@github.com/4hin/ios-automation-test.git
     - name: Git commit
       run: |
         git checkout -b hoge
