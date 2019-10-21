@@ -25,7 +25,7 @@ jobs:
         
     - name: Git commit
       run: |
-        git branch -b hoge
+        git checkout -b hoge
         git add -A
         
         DIFF=`git diff --cached --numstat | wc -l`
