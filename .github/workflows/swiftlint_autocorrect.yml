@@ -15,14 +15,7 @@ jobs:
     - name: install swiftlint
       run: brew install swiftlint
     - name: swiftlint
-      run: swiftlint autocorrect --format
-    - name: Setup git
-      env:
-        ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-      run: |
-        git config --local user.name 4hin
-        git remote set-url origin https://4hin:${ACCESS_TOKEN}@github.com/4hin/ios-automation-test.git
-        
+      run: swiftlint autocorrect --format     
     - name: Git commit
       run: |
         git checkout -b hoge
