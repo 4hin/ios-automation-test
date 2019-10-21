@@ -15,7 +15,7 @@ jobs:
         ruby-version: '2.6'
         architecture: 'x64'
     - name: install danger
-      run:
+      run: |
         gem install bundler
         bundle install
     - name: install swiftlint
