@@ -38,10 +38,21 @@ jobs:
       run: |
         git remote set-url origin https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
         git push origin HEAD
+    - name: Create comments
+      env:
+        BASE_URL: https://github.com/${GITHUB_ACTOR}/${GITHUB_REPOSITORY}
+      run: |
+        echo "create swiftlint autocorrect branch" >> comments
+        echo "name: ${GITHUB_HEAD_REF}_autocorrect" >> comments
+        echo "pull request: [here](${BASE_URL}/compare/${GITHUB_HEAD_REF}...${GITHUB_HEAD_REF}_autocorrect?expand=1)" >> comments
+        sed -i -z 's/\n\\n/g' comments
     - name: Comment pull request
-      uses: unsplash/comment-on-pr@master
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with: 
-        msg: "create branch ${GITHUB_HEAD_REF}_autocorrect"
+        URL: ${{ github.event.pull_request.comments_url }}
+      run: |
+        curl -X POST \
+             -H "Authorization: token ${GITHUB_TOKEN}" \
+             -d "{\"body\": \"$(cat comments)\"}" \
+             ${URL}
       
