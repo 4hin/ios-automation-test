@@ -20,7 +20,7 @@ jobs:
       run: |
         git config --local user.name "Github Action"
         git config --local user.email "action@github.com"
-        git remote set-url --push origin https://4hin:${GITHUB_TOKEN}@github.com/4hin/ios-automation-test.git
+        git remote set-url origin https://4hin:${GITHUB_TOKEN}@github.com/4hin/ios-automation-test.git
     - name: Git commit
       run: |
         git checkout -b hoge
@@ -34,4 +34,4 @@ jobs:
         git commit -am 'swiftlint autocorrect'
         
     - name: Git push
-      run: git push origin hoge
+      run: git push origin HEAD
