@@ -38,3 +38,8 @@ jobs:
       run: |
         git remote set-url origin https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
         git push origin hoge
+    - name: Create Pull Request
+      uses: peter-evans/create-pull-request@v1.5.4-multi
+      env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PULL_REQUEST_TITLE: '[CI] swiftlint autocorrect'
