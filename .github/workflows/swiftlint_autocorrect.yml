@@ -51,7 +51,7 @@ jobs:
       run: |
         curl -X POST \
              -H 'Content-Type:application/json'
-             -H "Authorization: token ${GITHUB_TOKEN}" \
+             -H 'Authorization: token ${GITHUB_TOKEN}' \
              -d "{\"body\": \"$(cat comments)\"}" \
              ${URL}
       
