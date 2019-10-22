@@ -37,7 +37,8 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         git remote set-url origin https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
-        git push origin HEAD
+        RESULT = `git push origin HEAD`
+        echo result
     - name: Create comments
       run: |
         echo "create swiftlint autocorrect branch" >> comments
