@@ -38,19 +38,16 @@ jobs:
       run: |
         git remote set-url origin https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
         git push origin HEAD
-    - name: Create comments
-      run: |
-        echo "create swiftlint autocorrect branch" >> comments
-        echo "name: ${GITHUB_HEAD_REF}_autocorrect" >> comments
-        echo "pull request: [here](https://github.com/${GITHUB_ACTOR}/${GITHUB_REPOSITORY}/compare/${GITHUB_HEAD_REF}...${GITHUB_HEAD_REF}_autocorrect?expand=1)" >> comments
-        sed -i -z 's/\n/\\n/g' comments
     - name: Comment pull request
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         URL: ${{ github.event.pull_request.comments_url }}
       run: |
+        COMMENTS="create swiftlint autocorrect branch\n" \
+        "name: ${GITHUB_HEAD_REF}_autocorrect\n" \
+        "pull request: [here](https://github.com/${GITHUB_ACTOR}/${GITHUB_REPOSITORY}/compare/${GITHUB_HEAD_REF}...${GITHUB_HEAD_REF}_autocorrect?expand=1)\n"
         curl -X POST \
              -H "Authorization: token ${GITHUB_TOKEN}" \
-             -d "{\"body\": \"test\"}" \
+             -d "{\"body\": \"${COMMENTS}\"}" \
              ${URL}
       
