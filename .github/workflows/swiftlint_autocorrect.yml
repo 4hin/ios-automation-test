@@ -43,12 +43,12 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         URL: ${{ github.event.pull_request.comments_url }}
       run: |
-        COMMENTS=`cat << EOS
-        create swiftlint autocorrect branch
-        name: ${GITHUB_HEAD_REF}_autocorrect
-        pull request: [here](https://github.com/${GITHUB_REPOSITORY}/compare/${GITHUB_HEAD_REF}...${GITHUB_HEAD_REF}_autocorrect?expand=1)
-        EOS
-        `
+        COMMENTS=" \
+        create swiftlint autocorrect branch\n
+        name: ${GITHUB_HEAD_REF}_autocorrect\n
+        pull request: [here](https://github.com/${GITHUB_REPOSITORY}/compare/${GITHUB_HEAD_REF}...${GITHUB_HEAD_REF}_autocorrect?expand=1) \
+        "
+        
         curl -X POST \
              -H "Authorization: token ${GITHUB_TOKEN}" \
              -d "{\"body\": \"${COMMENTS}\"}" \
