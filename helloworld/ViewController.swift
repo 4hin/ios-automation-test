@@ -14,5 +14,9 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
     }
+    
+    func foo(a:String){ 
+        if (a="hoge") {print("hoge")}else{print(a)}
+    }
 }
 
