@@ -45,7 +45,7 @@ jobs:
         echo "create swiftlint autocorrect branch" >> comments
         echo "name: ${GITHUB_HEAD_REF}_autocorrect" >> comments
         echo "pull request: [here](${BASE_URL}/compare/${GITHUB_HEAD_REF}...${GITHUB_HEAD_REF}_autocorrect?expand=1)" >> comments
-        sed -i -z 's/\n\\n/g' comments
+        sed -i -z 's/\n/\\n/g' comments
     - name: Comment pull request
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
