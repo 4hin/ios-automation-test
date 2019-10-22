@@ -13,7 +13,10 @@ jobs:
     - name: install swiftlint
       run: brew install swiftlint
     - name: swiftlint
-      run: swiftlint autocorrect --format
+      run: 
+        git diff --name-only | grep .swift | while read filename; do
+          swiftlint autocorrect --format --path "$filename"
+        done
     - name: Setup git
       env:
         ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
