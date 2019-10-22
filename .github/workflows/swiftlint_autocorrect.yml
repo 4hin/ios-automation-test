@@ -1,0 +1,54 @@
+  
+name: SwiftLint Autocorrect
+
+on: [pull_request]
+
+jobs:
+  build:
+
+    runs-on: macOS-latest
+    
+    steps:
+    - uses: actions/checkout@v1
+    - name: install swiftlint
+      run: brew install swiftlint
+    - name: swiftlint
+      run: swiftlint autocorrect --format
+    - name: Setup git
+      env:
+        ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        git config --local user.name "Github Action"
+        git config --local user.email "action@github.com"
+    - name: Git commit
+      run: |
+        git checkout -b ${GITHUB_HEAD_REF}_autocorrect
+        git add -A
+        
+        DIFF=`git diff --cached --numstat | wc -l`
+          if [ $DIFF -eq 0 ]; then
+          # ファイルの変更がなければjobを正常終了する
+            exit 0
+          fi
+        git commit -am 'swiftlint autocorrect'
+        
+    - name: Git push
+      env: 
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        git remote set-url origin https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
+        git push origin HEAD
+    - name: Comment pull request
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        URL: ${{ github.event.pull_request.comments_url }}
+      run: |
+        COMMENTS="create swiftlint autocorrect branch\n \
+        name: ${GITHUB_HEAD_REF}_autocorrect\n \
+        pull request: [here](https://github.com/${GITHUB_REPOSITORY}/compare/${GITHUB_HEAD_REF}...${GITHUB_HEAD_REF}_autocorrect?expand=1)"
+        
+        curl -X POST \
+             -H "Authorization: token ${GITHUB_TOKEN}" \
+             -d "{\"body\": \"${COMMENTS}\"}" \
+             ${URL}
+      

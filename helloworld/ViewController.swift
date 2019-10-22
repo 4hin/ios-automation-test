@@ -14,5 +14,28 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
     }
+    
+        func hoge(hoge:String)
+    {
+
+        let a=true
+        if a
+        {
+            print("hoge")
+        }
+        else
+        {
+            print("hoge");
+        }
+
+    }
+
+    func fuga(fuga: String = ""){
+        let a = [1,3,4].map({ $0+1 } )
+
+
+        
+    }
+
 }
 
